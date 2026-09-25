@@ -76,7 +76,7 @@ type OpenAlex = { results?: OpenAlexWork[] };
 
 async function fromPapers(query: string): Promise<{ hits: Hit[]; notes: string[] }> {
   const url = `https://api.openalex.org/works?search=${encodeURIComponent(query)}&per-page=4&select=display_name,publication_date,ids,open_access`;
-  const data = await getJson<OpenAlex>(url, { "User-Agent": "ichiji-tsukue" });
+  const data = await getJson<OpenAlex>(url, { "User-Agent": "light-fact-search" });
   const hits: Hit[] = [];
   const notes: string[] = [];
   for (const work of data?.results ?? []) {
@@ -99,7 +99,7 @@ type GhRelease = { html_url?: string; name?: string; tag_name?: string; publishe
 async function fromGithub(query: string): Promise<{ hits: Hit[]; notes: string[] }> {
   const headers = {
     Accept: "application/vnd.github+json",
-    "User-Agent": "ichiji-tsukue",
+    "User-Agent": "light-fact-search",
   };
   const data = await getJson<GhSearch>(
     `${HOSTS.github}?q=${encodeURIComponent(query)}&sort=updated&order=desc&per_page=3`,
